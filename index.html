@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>涟漪助手 · Ripple Assistant</title>
+    <title>涟漪 · 沉浸办公</title>
     <style>
         * {
             margin: 0;
@@ -70,80 +70,53 @@
             color: rgba(255,255,255,0.3);
             font-weight: 300;
             letter-spacing: 2px;
+            max-width: 600px;
+            margin: 0 auto 6px;
         }
 
-        .preview {
-            background: rgba(255,255,255,0.02);
-            border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 50px;
-            border: 1px solid rgba(255,255,255,0.03);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 260px;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .preview-placeholder {
-            font-size: 64px;
-            opacity: 0.15;
-            letter-spacing: 8px;
-            user-select: none;
-        }
-
-        .preview-text {
+        .subtitle-small {
+            font-size: 13px;
             color: rgba(255,255,255,0.15);
-            font-size: 14px;
+            font-weight: 300;
             letter-spacing: 1px;
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 44px;
-        }
-
-        .feature-card {
-            background: rgba(255,255,255,0.02);
-            border-radius: 20px;
-            padding: 28px 24px;
-            border: 1px solid rgba(255,255,255,0.04);
-            transition: all 0.25s ease;
-        }
-
-        .feature-card:hover {
-            background: rgba(255,255,255,0.04);
-            border-color: rgba(255,255,255,0.08);
-            transform: translateY(-4px);
-        }
-
-        .feature-icon {
-            font-size: 28px;
-            margin-bottom: 10px;
-            display: block;
-            opacity: 0.6;
-        }
-
-        .feature-title {
-            color: rgba(255,255,255,0.8);
-            font-size: 18px;
-            font-weight: 400;
-            margin-bottom: 4px;
-        }
-
-        .feature-desc {
-            color: rgba(255,255,255,0.3);
-            font-size: 14px;
-            font-weight: 300;
-            line-height: 1.5;
-        }
-
+        /* 下载按钮 — 悬浮在水面中 */
         .download-section {
             text-align: center;
-            margin-bottom: 32px;
+            margin: 50px 0 60px;
+            position: relative;
+        }
+
+        .download-section .ripple-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(80, 200, 255, 0.06);
+            width: 320px;
+            height: 320px;
+            animation: pulse-ring 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .download-section .ripple-ring:nth-child(2) {
+            width: 420px;
+            height: 420px;
+            animation-delay: 1.2s;
+        }
+
+        .download-section .ripple-ring:nth-child(3) {
+            width: 520px;
+            height: 520px;
+            animation-delay: 2.4s;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.1; }
+            100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.6; }
         }
 
         .btn-download {
@@ -151,8 +124,8 @@
             background: linear-gradient(135deg, #50e6ff, #0077cc);
             color: #0b0d15;
             font-weight: 500;
-            font-size: 18px;
-            padding: 16px 48px;
+            font-size: 20px;
+            padding: 18px 56px;
             border-radius: 60px;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -160,10 +133,12 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 8px 32px rgba(80, 230, 255, 0.15);
+            position: relative;
+            z-index: 2;
         }
 
         .btn-download:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
             box-shadow: 0 12px 48px rgba(80, 230, 255, 0.25);
         }
 
@@ -171,28 +146,56 @@
             transform: scale(0.97);
         }
 
-        .footer {
-            text-align: center;
-            color: rgba(255,255,255,0.12);
+        .download-hint {
+            margin-top: 16px;
             font-size: 13px;
-            letter-spacing: 1px;
-            border-top: 1px solid rgba(255,255,255,0.03);
-            padding-top: 28px;
+            color: rgba(255,255,255,0.15);
+            letter-spacing: 0.5px;
         }
 
-        .footer a {
-            color: rgba(255,255,255,0.2);
+        .download-hint strong {
+            color: rgba(255,255,255,0.3);
+            font-weight: 400;
+        }
+
+        /* 底部信息 */
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px 40px;
+        }
+
+        .footer-item {
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .footer-item .label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.12);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .footer-item .value {
+            font-size: 13px;
+            color: rgba(255,255,255,0.3);
+            font-weight: 300;
+        }
+
+        .footer-item .value a {
+            color: rgba(255,255,255,0.3);
             text-decoration: none;
             transition: color 0.2s;
         }
 
-        .footer a:hover {
-            color: rgba(255,255,255,0.4);
-        }
-
-        .footer span {
-            margin: 0 8px;
-            opacity: 0.2;
+        .footer-item .value a:hover {
+            color: rgba(255,255,255,0.6);
         }
 
         @media (max-width: 700px) {
@@ -202,18 +205,28 @@
             h1 {
                 font-size: 32px;
             }
-            .features {
-                grid-template-columns: 1fr;
-            }
             .btn-download {
                 width: 100%;
                 text-align: center;
-                padding: 14px 24px;
-                font-size: 16px;
+                padding: 16px 24px;
+                font-size: 17px;
             }
-            .preview {
-                padding: 24px;
-                min-height: 180px;
+            .download-section .ripple-ring {
+                width: 200px;
+                height: 200px;
+            }
+            .download-section .ripple-ring:nth-child(2) {
+                width: 280px;
+                height: 280px;
+            }
+            .download-section .ripple-ring:nth-child(3) {
+                width: 360px;
+                height: 360px;
+            }
+            .footer {
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
             }
         }
     </style>
@@ -222,36 +235,40 @@
     <div class="container">
         <div class="header">
             <div class="logo">✦ 开源 · 免费</div>
-            <h1>涟漪助手 <span>Ripple Assistant</span></h1>
-            <p class="subtitle">将文件整理转化为视觉化仪式的桌面工具</p >
+            <h1>涟漪 <span>Ripple</span></h1>
+            <p class="subtitle">仿 Mac 的沉浸办公工具</p>
+            <p class="subtitle-small">轻量 · 优雅 · 帮您快速找到桌面文件</p>
         </div>
 
-        <div class="preview">
-            <div class="preview-placeholder">✦ ✦ ✦</div>
-            <div class="preview-text">涟漪效果演示 · 截图占位</div>
-        </div>
-
-        <div class="features">
-            <div class="feature-card">
-                <span class="feature-icon">📂</span>
-                <div class="feature-title">整理桌面</div>
-                <div class="feature-desc">自动将桌面文件按类型归类，显示为整齐的网格。</div>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">🔍</span>
-                <div class="feature-title">找文件</div>
-                <div class="feature-desc">输入关键词搜索桌面文件，双击直接打开。</div>
-            </div>
-        </div>
-
+        <!-- 下载按钮 — 悬浮在水面中 -->
         <div class="download-section">
-            <a class="btn-download" href=" " target="_blank">⬇ 下载体验</a >
+            <div class="ripple-ring"></div>
+            <div class="ripple-ring"></div>
+            <div class="ripple-ring"></div>
+            <a class="btn-download" href="https://github.com/ripplepassage/ripple-assistant/releases" target="_blank">⬇ 下载体验</a>
+            <div class="download-hint">
+                <strong>Windows</strong> · 双击即用 · 无需安装
+            </div>
         </div>
 
+        <!-- 底部信息 -->
         <div class="footer">
-            <a href="https://github.com/ripplepassage/ripple-assistant" target="_blank">GitHub 仓库</a >
-            <span>·</span>
-            开源 · 免费
+            <div class="footer-item">
+                <div class="label">版本</div>
+                <div class="value">一代 · 稳定版</div>
+            </div>
+            <div class="footer-item">
+                <div class="label">历程</div>
+                <div class="value">从涟漪到沉浸</div>
+            </div>
+            <div class="footer-item">
+                <div class="label">核心理念</div>
+                <div class="value">工具隐身 · 意图直达</div>
+            </div>
+            <div class="footer-item">
+                <div class="label">GitHub</div>
+                <div class="value"><a href="https://github.com/ripplepassage/ripple-assistant" target="_blank">开源仓库</a></div>
+            </div>
         </div>
     </div>
 </body>
